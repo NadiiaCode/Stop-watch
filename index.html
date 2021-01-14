@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="circle">
+      <div id="watch">0 : 0 : 0 : 0</div>
+    </div>
+
+    <input type="button" value="Start" id="btn" onclick="stopWatch()" />
+    <input type="button" value="Reset" id="reset" onclick="Reset()" />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+      * {
+        background: #aa7e8d;
+      }
+
+      #circle {
+        height: 300px;
+        width: 300px;
+        border-radius: 50%;
+        top: 94px;
+        left: 35px;
+        position: relative;
+        background: #fff;
+        border: 10px double #886470;
+      }
+
+      #watch {
+        height: 40px;
+        width: 200px;
+        border-radius: 25px;
+        top: 130px;
+        left: 50px;
+        position: relative;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+        font-size: 30px;
+        font-family: "VT323", monospace;
+        border: 5px double #644952;
+      }
+
+      #btn {
+        top: 450px;
+        left: 260px;
+        border-radius: 30px;
+        outline: none;
+        background: white;
+        color: #745660;
+      }
+
+      #reset {
+        left: 40px;
+        top: 450px;
+        outline: none;
+        border-radius: 35px;
+        background: white;
+        color: #745660;
+      }
+
+      input {
+        height: 50px;
+        width: 100px;
+        top: 370px;
+        position: absolute;
+        font-size: 20px;
+      }
+    </style>
+
+    <script>
+      var click = true;
+      var chronometer = 0;
+      var hour = 0;
+      var min = 0;
+      var sec = 0;
+      var interval = null;
+      var btn = document.getElementById("btn");
+      function stopWatch() {
+        if (click == true) {
+          interval = setInterval(count, 7);
+          click = false;
+          btn.value = "Stop";
+        } else if (click == false) {
+          clearInterval(interval);
+          click = true;
+          btn.value = "Start";
+        }
+      }
+      function count() {
+        chronometer++;
+        if (chronometer == 100) {
+          sec++;
+          chronometer = 0;
+        } else if (sec == 60) {
+          min++;
+          sec = 0;
+        } else if (min == 60) {
+          hour++;
+          min = 0;
+        }
+        document.getElementById(
+          "watch"
+        ).innerHTML = `${hour} : ${min} : ${sec} : ${chronometer}`;
+      }
+      function Reset() {
+        chronometer = 0;
+        min = 0;
+        sec = 0;
+        hour = 0;
+        document.getElementById(
+          "watch"
+        ).innerHTML = `${hour} : ${min} : ${sec} : ${chronometer}`;
+        btn.value = "Start";
+        click = true;
+        clearInterval(interval);
+      }
+    </script>
+  </body>
+</html>
